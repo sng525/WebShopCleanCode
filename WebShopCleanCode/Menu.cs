@@ -2,28 +2,15 @@ namespace WebShopCleanCode;
 
 public class Menu
 {
-    public string currentMenu { get; set; }
-    public string option1 { get; set; }
-    public string option2 { get; set; }
-    public string option3 { get; set; }
-    public string option4 { get; set; }
+    public string currentMenu { get; set; } = "main menu";
+    public string option1 { get; set; } = "See Wares";
+    public string option2 { get; set; } = "Customer Info";
+    public string option3 { get; set; } = "Login";
+    public string option4 { get; set; } = "";
     
     Customer customer;
-    public int currentChoice { get; set; }
-    public int amountOfOptions { get; set; }
-    
-    public Menu()
-    {
-        currentMenu = "main menu";
-        currentChoice = 1;
-        amountOfOptions = 3;
-        option1 = "See Wares";
-        option2 = "Customer Info";
-        option3 = "Login";
-        option4 = "";
-        currentChoice = 1;
-        amountOfOptions = 3;
-    }
+    public int currentChoice { get; set; } = 1;
+    public int amountOfOptions { get; set; } = 3;
 
     public void MainMenu()
     {
@@ -74,7 +61,7 @@ public class Menu
         amountOfOptions = 3;
     }
     
-    public void NavigateToWaresMenu()
+    public void WaresMenu()
     {
         option1 = "See all wares";
         option2 = "Purchase a ware";
@@ -103,4 +90,26 @@ public class Menu
         currentChoice = 1;
         amountOfOptions = 4;
     }
+    
+    public void CustomerMenu()
+    {
+        if (customer != null)
+        {
+            option1 = "See your orders";
+            option2 = "Set your info";
+            option3 = "Add funds";
+            option4 = "";
+            amountOfOptions = 3;
+            currentChoice = 1;
+            currentMenu = "customer menu";
+        }
+        else
+        {
+            Console.WriteLine();
+            Console.WriteLine("Nobody is logged in.");
+            Console.WriteLine();
+        }
+    }
+    
+    
 }
