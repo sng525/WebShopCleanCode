@@ -1,12 +1,55 @@
-namespace WebShopCleanCode;
 
-public class LoginMenu
+
+using WebShopCleanCode;
+using WebShopCleanCode.Command;
+using WebShopCleanCode.Menu;
+using WebShopCleanCode.Menus;
+
+public class LogInMenuCommand : ICommand
 {
-    public string username { get; set; }
-    public string password { get; set; }
-    private Menu menu = new Menu();
+    MainMenu _menu;
+    private string username { get; set; }
+    private string password { get; set; }
+    private List<Customer> _customers;
+    
+    public LogInMenuCommand(MainMenu menu, List<Customer> customers)
+    {
+        _menu = menu;
+        _customers = customers;
+    }
 
-    public void LogIn(Customer currentCustomer, List<Customer> customers)
+    public void Execute(Customer currentCustomer, ref int currentChoice, ref int amountOfOptions)
+    {
+        switch (currentChoice)
+        {
+            case 1:
+                username =InputUserInfo("username");
+                break;
+            case 2:
+                password = InputUserInfo("password");
+                break;
+            case 3:
+                currentCustomer = LogIn(_customers);
+                if (currentCustomer != null)
+                {
+                    // _menu = new MainMenu();
+                    _menu.NavigateToMainMenu(currentCustomer, ref amountOfOptions);
+                    // _menu.NavigateToMainMenu();
+                }
+                break;
+            case 4:
+                currentCustomer = Register(_customers);
+                // _menu = new MenuBase(new MainMenu());
+                _menu.NavigateToMainMenu(currentCustomer, ref amountOfOptions);
+                break;
+            default:
+                WebShop.PrintDefaultMessage();
+                break;
+        }
+    }
+
+
+    private Customer LogIn(List<Customer> customers)
     {
         if (username == null || password == null)
         {
@@ -24,11 +67,7 @@ public class LoginMenu
                     Console.WriteLine();
                     Console.WriteLine(customer.Username + " logged in.");
                     Console.WriteLine();
-                    currentCustomer = customer;
-                    found = true;
-                    // Console.WriteLine(info);
-                    menu.NavigateToMainMenu(currentCustomer);
-                    break;
+                    return customer;
                 }
             }
 
@@ -39,9 +78,10 @@ public class LoginMenu
                 Console.WriteLine();
             }
         }
+        return null;
     }
 
-    public void Register(Customer currentCustomer, List<Customer> customers)
+    private Customer Register(List<Customer> customers)
     {
         Console.WriteLine("Please write your username.");
         string newUsername = Console.ReadLine();
@@ -52,7 +92,7 @@ public class LoginMenu
                 Console.WriteLine();
                 Console.WriteLine("Username already exists.");
                 Console.WriteLine();
-                break;
+                return null;
             }
         }
 
@@ -62,27 +102,23 @@ public class LoginMenu
         string firstName = AskCustomerInfo("first name", ref next);
         string lastName = AskCustomerInfo("last name", ref next);
         string email = AskCustomerInfo("email", ref next);
-
-        // TODO age is integer, need another function?
-        int age = AskCustomerAge(ref next);
-
+        int age = AskCustomerAge(ref next);      
         string address = AskCustomerInfo("address", ref next);
-        // TODO slight different;
         string phoneNumber = AskCustomerInfo("phone number", ref next);
 
         Customer newCustomer = new Customer(newUsername, newPassword, firstName, lastName,
             email, age, address, phoneNumber);
         customers.Add(newCustomer);
-        currentCustomer = newCustomer;
+        // currentCustomer = newCustomer;
         Console.WriteLine();
         Console.WriteLine(
             newCustomer.Username + " successfully added and is now logged in.");
         Console.WriteLine();
-        // Console.WriteLine(info);
-        menu.NavigateToMainMenu(currentCustomer);
+        // menu.NavigateToMainMenu(newCustomer);
+        return newCustomer;
     }
 
-    public int AskCustomerAge(ref bool next)
+    private int AskCustomerAge(ref bool next)
     {
         string choice;
         int age = -1;
@@ -127,7 +163,7 @@ public class LoginMenu
         return age;
     }
 
-    public string AskCustomerInfo(string infoMessage, ref bool next)
+    private string AskCustomerInfo(string infoMessage, ref bool next)
     {
         string choice;
         string infoItem = null;
@@ -168,8 +204,8 @@ public class LoginMenu
 
         return infoItem;
     }
-
-    public string InputUserInfo(string infoName)
+    
+    private string InputUserInfo(string infoName) 
     {
         Console.WriteLine("A keyboard appears.");
         Console.WriteLine($"Please input your {infoName}.");
@@ -177,4 +213,6 @@ public class LoginMenu
         Console.WriteLine();
         return input;
     }
+
+    
 }
