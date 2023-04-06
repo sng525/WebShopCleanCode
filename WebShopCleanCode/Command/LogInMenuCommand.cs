@@ -7,20 +7,20 @@ using WebShopCleanCode.Menus;
 
 public class LogInMenuCommand : ICommand
 {
-    MainMenu _menu;
+    IMenu _menu;
     private string username { get; set; }
     private string password { get; set; }
     private List<Customer> _customers;
     
-    public LogInMenuCommand(MainMenu menu, List<Customer> customers)
+    public LogInMenuCommand(IMenu menu, List<Customer> customers)
     {
         _menu = menu;
         _customers = customers;
     }
 
-    public void Execute(Customer currentCustomer, ref int currentChoice, ref int amountOfOptions)
+    public void Execute()
     {
-        switch (currentChoice)
+        switch (_menu.currentChoice)
         {
             case 1:
                 username =InputUserInfo("username");
@@ -29,25 +29,23 @@ public class LogInMenuCommand : ICommand
                 password = InputUserInfo("password");
                 break;
             case 3:
-                currentCustomer = LogIn(_customers);
-                if (currentCustomer != null)
+                _menu.currentCustomer = LogIn(_customers);
+                if (_menu.currentCustomer != null)
                 {
-                    // _menu = new MainMenu();
-                    _menu.NavigateToMainMenu(currentCustomer, ref amountOfOptions);
-                    // _menu.NavigateToMainMenu();
+                    _menu = new MainMenu();
+                    _menu.DisplayMenu();
                 }
                 break;
             case 4:
-                currentCustomer = Register(_customers);
-                // _menu = new MenuBase(new MainMenu());
-                _menu.NavigateToMainMenu(currentCustomer, ref amountOfOptions);
+                _menu.currentCustomer = Register(_customers);
+                _menu = new MainMenu();
+                _menu.DisplayMenu();
                 break;
             default:
                 WebShop.PrintDefaultMessage();
                 break;
         }
     }
-
 
     private Customer LogIn(List<Customer> customers)
     {
@@ -109,12 +107,13 @@ public class LogInMenuCommand : ICommand
         Customer newCustomer = new Customer(newUsername, newPassword, firstName, lastName,
             email, age, address, phoneNumber);
         customers.Add(newCustomer);
-        // currentCustomer = newCustomer;
+        _menu.currentCustomer = newCustomer;
         Console.WriteLine();
         Console.WriteLine(
             newCustomer.Username + " successfully added and is now logged in.");
         Console.WriteLine();
-        // menu.NavigateToMainMenu(newCustomer);
+        _menu = new MainMenu();
+        _menu.DisplayMenu();
         return newCustomer;
     }
 
@@ -213,6 +212,4 @@ public class LogInMenuCommand : ICommand
         Console.WriteLine();
         return input;
     }
-
-    
 }

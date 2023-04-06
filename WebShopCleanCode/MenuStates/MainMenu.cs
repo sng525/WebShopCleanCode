@@ -9,13 +9,13 @@ public class MainMenu : MenuBase
     public override string option3 { get; set; } = "Login";
     public override string option4 { get; set; } = "";
     public override string currentMenu { get; set; } = "main menu";
-    // public int amountOfOptions { get; set; } = 3;
+    public override int amountOfOptions { get; set; } = 3;
     public override string info { get; set; } = "What would you like to do?";
-    // public Customer currentCustomer { get; }
+    public override Customer currentCustomer { get; set; }
     // public ProductList productList { get; }
-    // public int currentChoice { get; set; }
+    public override int currentChoice { get; set; }
 
-    public override void DisplayMenu(Customer currentCustomer, ref int amountOfOptions)
+    public override void DisplayMenu()
     {
         Console.WriteLine(info);
         Console.WriteLine("1: " + option1);
@@ -32,7 +32,7 @@ public class MainMenu : MenuBase
         }
     }
     
-    public void NavigateToMainMenu(Customer currentCustomer, ref int amountOfOptions)
+    public void NavigateToMainMenu()
     {
         option1 = "See Wares";
         option2 = "Customer Info";
@@ -46,7 +46,7 @@ public class MainMenu : MenuBase
         }
         info = "What would you like to do?";
         currentMenu = "main menu";
-        // currentChoice = 1;
+        currentChoice = 1;
         amountOfOptions = 3;
     }
 }

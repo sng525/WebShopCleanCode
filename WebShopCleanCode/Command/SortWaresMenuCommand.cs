@@ -2,21 +2,20 @@
 using WebShopCleanCode;
 using WebShopCleanCode.Command;
 using WebShopCleanCode.Menu;
+using WebShopCleanCode.Menus;
 
 public class SortWaresMenuCommand : ICommand
 {
-    private MenuBase _menu;
-    private List<Product> products;
-    
-    public SortWaresMenuCommand(SortWaresMenu menu, List<Product> products) {
-        _menu = menu;
-        this.products = products;
-    }
+    private IMenu _menu;
 
-    public void Execute(Customer currentCustomer, ref int currentChoice, ref int amountOfOptions)
+    public SortWaresMenuCommand(IMenu menu)
+    {
+        _menu = menu;
+    }
+    public void Execute()
     {
         bool back = true;
-        switch (currentChoice)
+        switch (_menu.currentChoice)
         {
             case 1:
                 bubbleSort("name", false);
@@ -43,16 +42,15 @@ public class SortWaresMenuCommand : ICommand
         if (back)
         {
             _menu = new WaresMenu();
-            _menu.DisplayMenu(currentCustomer, ref amountOfOptions);
+            _menu.DisplayMenu();
         }
     }
-    
     
     public void bubbleSort(string variable, bool ascending)
     {
         if (variable.Equals("name"))
         {
-            int length = products.Count;
+            int length = _menu.productList.products.Count;
             for (int i = 0; i < length - 1; i++)
             {
                 bool sorted = true;
@@ -61,21 +59,21 @@ public class SortWaresMenuCommand : ICommand
                 {
                     if (ascending)
                     {
-                        if (products[j].Name.CompareTo(products[j + 1].Name) < 0)
+                        if (_menu.productList.products[j].Name.CompareTo(_menu.productList.products[j + 1].Name) < 0)
                         {
-                            Product temp = products[j];
-                            products[j] = products[j + 1];
-                            products[j + 1] = temp;
+                            Product temp = _menu.productList.products[j];
+                            _menu.productList.products[j] = _menu.productList.products[j + 1];
+                            _menu.productList.products[j + 1] = temp;
                             sorted = false;
                         }
                     }
                     else
                     {
-                        if (products[j].Name.CompareTo(products[j + 1].Name) > 0)
+                        if (_menu.productList.products[j].Name.CompareTo(_menu.productList.products[j + 1].Name) > 0)
                         {
-                            Product temp = products[j];
-                            products[j] = products[j + 1];
-                            products[j + 1] = temp;
+                            Product temp = _menu.productList.products[j];
+                            _menu.productList.products[j] = _menu.productList.products[j + 1];
+                            _menu.productList.products[j + 1] = temp;
                             sorted = false;
                         }
                     }
@@ -89,7 +87,7 @@ public class SortWaresMenuCommand : ICommand
         }
         else if (variable.Equals("price"))
         {
-            int length = products.Count;
+            int length = _menu.productList.products.Count;
             for (int i = 0; i < length - 1; i++)
             {
                 bool sorted = true;
@@ -98,21 +96,21 @@ public class SortWaresMenuCommand : ICommand
                 {
                     if (ascending)
                     {
-                        if (products[j].Price > products[j + 1].Price)
+                        if (_menu.productList.products[j].Price > _menu.productList.products[j + 1].Price)
                         {
-                            Product temp = products[j];
-                            products[j] = products[j + 1];
-                            products[j + 1] = temp;
+                            Product temp = _menu.productList.products[j];
+                            _menu.productList.products[j] = _menu.productList.products[j + 1];
+                            _menu.productList.products[j + 1] = temp;
                             sorted = false;
                         }
                     }
                     else
                     {
-                        if (products[j].Price < products[j + 1].Price)
+                        if (_menu.productList.products[j].Price < _menu.productList.products[j + 1].Price)
                         {
-                            Product temp = products[j];
-                            products[j] = products[j + 1];
-                            products[j + 1] = temp;
+                            Product temp = _menu.productList.products[j];
+                            _menu.productList.products[j] = _menu.productList.products[j + 1];
+                            _menu.productList.products[j + 1] = temp;
                             sorted = false;
                         }
                     }

@@ -5,30 +5,28 @@ using WebShopCleanCode.Menus;
 public class PurchaseMenuCommand : ICommand
 {
     
-    private PurchaseMenu _menu;
-    private List<Product> products;
+    private IMenu _menu;
     
-    public PurchaseMenuCommand(PurchaseMenu menu, List<Product> products) {
+    public PurchaseMenuCommand(IMenu menu)
+    {
         _menu = menu;
-        this.products = products;
     }
-    
-    public void Execute(Customer currentCustomer, ref int currentChoice, ref int amountOfOptions)
+
+    public void Execute()
     {
-        PurchaseWare(ref currentChoice, currentCustomer);
+        PurchaseWare();
     }
-    
-    public void PurchaseWare(ref int currentChoice, Customer currentCustomer)
+    public void PurchaseWare()
     {
-        int index = currentChoice - 1;
-        var product = products[index];
+        int index = _menu.currentChoice - 1;
+        var product = _menu.productList.products[index];
         if (product.InStock())
         {
-            if (currentCustomer.CanAfford(product.Price))
+            if (_menu.currentCustomer.CanAfford(product.Price))
             {
-                currentCustomer.Funds -= product.Price;
+                _menu.currentCustomer.Funds -= product.Price;
                 product.NrInStock--;
-                currentCustomer.Orders.Add(new Order(product.Name, product.Price, DateTime.Now));
+                _menu.currentCustomer.Orders.Add(new Order(product.Name, product.Price, DateTime.Now));
                 Console.WriteLine();
                 Console.WriteLine("Successfully bought " + product.Name);
                 Console.WriteLine();

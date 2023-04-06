@@ -1,35 +1,32 @@
 using WebShopCleanCode.Menu;
+using WebShopCleanCode.Menus;
 
 namespace WebShopCleanCode.Command;
 
 public class MainMenuCommand : ICommand
 {
-    MenuBase _menu;
+    IMenu _menu;
 
-    public void Execute(Customer currentCustomer, ref int currentChoice, ref int amountOfOptions)
+    public MainMenuCommand(IMenu menu)
     {
-        switch (currentChoice)
+        _menu = menu;
+    }
+
+    public void Execute()
+    {
+        switch (_menu.currentChoice)
         {
             case 1:
                 _menu = new WaresMenu();
-                _menu.DisplayMenu(currentCustomer, ref amountOfOptions);
-                currentChoice = 1;
-                amountOfOptions = 4;
-                // _menu.NavigateToAMenu(new WaresMenu());
+                _menu.DisplayMenu();
                 break;
             case 2:
                 _menu = new CustomerMenu();
-                _menu.DisplayMenu(currentCustomer, ref amountOfOptions);
-                currentChoice = 1;
-                amountOfOptions = 3;
-                //_menu.NavigateToAMenu(new CustomerMenu());
+                _menu.DisplayMenu();
                 break;
             case 3:
                 _menu = new LoginMenu();
-                _menu.DisplayMenu(currentCustomer, ref amountOfOptions);
-                currentChoice = 1;
-                amountOfOptions = 4;
-                // _menu.NavigateToAMenu(new LoginMenu());
+                _menu.DisplayMenu();
                 break;
             default:
                 WebShop.PrintDefaultMessage();

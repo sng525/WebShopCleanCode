@@ -7,27 +7,28 @@ public class PurchaseMenu : MenuBase
     public override string option3 { get; set; }
     public override string option4 { get; set; }
     public override string currentMenu { get; set; } = "purchase menu";
-    // public int amountOfOptions { get; set; }
+    public override int amountOfOptions { get; set; }
     public override string info { get; set; }
-    // public Customer currentCustomer { get; }
-    // public ProductList productList { get; }
-    // public int currentChoice { get; set; }
+    public override Customer currentCustomer { get; set; }
 
-    public virtual void DisplayMenu(Customer currentCustomer, ref int amountOfOptions)
+    public override ProductList productList { get; set; }
+    public override int currentChoice { get; set; }
+
+    public override void DisplayMenu()
     {
         if (currentCustomer != null)
         {
             currentMenu = "purchase menu";
             info = "What would you like to purchase?";
-            // currentChoice = 1;
-            // amountOfOptions = products.Count;
+            currentChoice = 1;
+            amountOfOptions = productList.products.Count;
         }
         else
         {
             Console.WriteLine();
             Console.WriteLine("You must be logged in to purchase wares.");
             Console.WriteLine();
-            // currentChoice = 1;
+            currentChoice = 1;
         }
     }
 }

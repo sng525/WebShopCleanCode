@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using WebShopCleanCode.Menus;
 using ICommand = WebShopCleanCode.Command.ICommand;
 
 namespace WebShopCleanCode.LeftRightOkBackCommand;
@@ -6,25 +7,24 @@ namespace WebShopCleanCode.LeftRightOkBackCommand;
 public class OkCommand : IDirectionCommand
 {
     private Dictionary<(string currentMenu, int currentChoice), ICommand> _commandDict;
-    Customer currentCustomer;
+    private IMenu _menu;
 
-    public OkCommand(Dictionary<(string currentMenu, int currentChoice), ICommand> commandDict)
+    public OkCommand(IMenu menu, Dictionary<(string currentMenu, int currentChoice), ICommand> commandDict)
     {
+        _menu = menu;
         _commandDict = commandDict;
     }
 
-    public int Execute(ref int currentChoice, ref int amountOfChoices, string currentMenu)
+    public void Execute()
     {
-        if (_commandDict.TryGetValue((currentMenu, currentChoice), out var command))
+        if (_commandDict.TryGetValue((_menu.currentMenu, _menu.currentChoice), out var command))
         {
-            command.Execute(currentCustomer, ref currentChoice, ref amountOfChoices);
+            command.Execute();
         }
         else
         {
             WebShop.PrintDefaultMessage();
         }
-
-        return currentChoice;
     }
     
 }

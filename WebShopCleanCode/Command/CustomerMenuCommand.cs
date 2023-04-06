@@ -1,21 +1,29 @@
 using WebShopCleanCode.Menu;
+using WebShopCleanCode.Menus;
 
 namespace WebShopCleanCode.Command;
 
 public class CustomerMenuCommand : ICommand
 {
-    public void Execute(Customer currentCustomer, ref int currentChoice, ref int amountOfOptions)
+    private IMenu _menu;
+
+    public CustomerMenuCommand(IMenu menu)
     {
-        switch (currentChoice)
+        _menu = menu;
+    }
+
+    public void Execute()
+    {
+        switch (_menu.currentChoice)
         {
             case 1:
-                currentCustomer.PrintOrders();
+                _menu.currentCustomer.PrintOrders();
                 break;
             case 2:
-                currentCustomer.PrintInfo();
+                _menu.currentCustomer.PrintInfo();
                 break;
             case 3:
-                AddFund(currentCustomer);
+                AddFund(_menu.currentCustomer);
                 break;
             default:
                 WebShop.PrintDefaultMessage();
