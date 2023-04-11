@@ -7,7 +7,6 @@ public class AddFundCommand : IImplementationCommand
 {
     public void DoStuff()
     {
-        var menuState = new MenuContext();
         Console.WriteLine("How many funds would you like to add?");
         string amountString = Console.ReadLine();
         try
@@ -21,7 +20,7 @@ public class AddFundCommand : IImplementationCommand
             }
             else
             {
-                var currentCustomer = menuState.GetCurrentCustomer();
+                var currentCustomer = MenuContext.GetInstance().GetCurrentCustomer();
                 currentCustomer.Funds += amount;
                 Console.WriteLine();
                 Console.WriteLine(amount + " added to your profile.");

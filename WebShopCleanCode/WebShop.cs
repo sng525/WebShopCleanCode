@@ -7,17 +7,11 @@ namespace WebShopCleanCode
     {
         public void Run()
         {
-            var menuState = new MenuContext();
-            menuState.SetState(new MainMenu());
-
             Console.WriteLine("Welcome to the WebShop!");
             
-            const bool running = true;
-            
-            while (running)
-            {
-                menuState.Request();
-            }
+            var menuState = new MenuContext();
+            menuState.SetState(new MainMenu());
+            menuState.Request();
         }
     }
 }

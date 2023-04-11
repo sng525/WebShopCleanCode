@@ -12,6 +12,8 @@ public class MenuContext
     public string username;
     public string password;
     
+    Database database = new Database();
+    
     public static MenuContext GetInstance() {
         if (instance == null) {
             instance = new MenuContext();
@@ -19,9 +21,9 @@ public class MenuContext
         return instance;
     }
 
-    public void SetState(IMenu menustate)
+    public void SetState(IMenu menuState)
     {
-        menuState = menustate;
+        this.menuState = menuState;
     }
 
     public void Request()
@@ -41,12 +43,24 @@ public class MenuContext
 
     public List<Customer> GetCustomerList()
     {
+        database = new Database();
+        customerList = database.GetCustomers();
         return customerList;
     }
 
+    public string GetUsername()
+    {
+        return username;
+    }
+    
     public void SetUsername(string username)
     {
         this.username = username;
+    }
+    
+    public string GetPassword()
+    {
+        return password;
     }
     
     public void SetPassword(string password)

@@ -1,5 +1,4 @@
 using System.Windows.Input;
-using WebShopCleanCode.Command;
 using WebShopCleanCode.LeftRightOkBackCommand;
 using WebShopCleanCode.Menu;
 using WebShopCleanCode.Menus;
@@ -14,32 +13,15 @@ public abstract class MenuBase : IMenu
     public string info { get; set; }
     public int currentChoice { get; set; }
     public ProductList productList = new ProductList();
-
     private Dictionary<string, IDirectionCommand> directionCommand = new Dictionary<string, IDirectionCommand>();
-    private Dictionary<string, IMenuCommand> commandDict = new Dictionary<string, IMenuCommand>();
 
     public virtual void DisplayMenu()
     {
         throw new NotImplementedException();
     }
 
-    public void LeftCommandFunction()
-    {
-        if (currentChoice > 1)
-        {
-            currentChoice--;
-        }
-    }
-    
-
     public void MenuBar()
     {
-        /*Dictionary<string, ThreadStart> newDirectionCommand = new Dictionary<string, ThreadStart>();
-        newDirectionCommand.Add("left", LeftCommandFunction);*/
-        
-        
-        
-
         directionCommand = new Dictionary<string, IDirectionCommand>
         {
             { "left", new LeftCommand() },
@@ -80,6 +62,10 @@ public abstract class MenuBase : IMenu
         if (directionCommand.TryGetValue(choice.ToLowerInvariant(), out var command))
         {
             command.Execute(this);
+            if (choice == "quit" || choice == "q")
+            {
+                Environment.Exit(0);
+            }
         }
         else
         {
@@ -225,7 +211,13 @@ public abstract class MenuBase : IMenu
     {
         if (currentMenu.Equals("purchase menu"))
         {
-            productList.GetProductList(MenuContext.GetInstance().currentCustomer, optionList.Count);
+            productList = new ProductList();
+            for (int i = 0; i < optionList.Count; i++)
+            {
+                Console.WriteLine(i + 1 + ": " + productList.products[i].Name + ", " + productList.products[i].Price + "kr");
+            }
+
+            Console.WriteLine("Your funds: " + MenuContext.GetInstance().GetCurrentCustomer().Funds);
         }
     }
 

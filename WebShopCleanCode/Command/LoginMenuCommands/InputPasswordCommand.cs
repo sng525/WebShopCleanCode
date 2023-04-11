@@ -6,8 +6,8 @@ public class InputPasswordCommand : IImplementationCommand
 {
     public void DoStuff()
     {
-        MenuContext menuState = new MenuContext();
-        var output = menuState.InputUserInfo("password");
-        menuState.SetPassword(output);
+        // var menuState = new MenuContext();
+        var output = MenuContext.GetInstance().InputUserInfo("password");
+        MenuContext.GetInstance().SetPassword(output);
     }
 }

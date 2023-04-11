@@ -9,9 +9,8 @@ public class CustomerMenu : MenuBase
     {
         optionList = new List<string>();
         optionList.Add("See your orders");
-        optionList.Add("Set your info");
+        optionList.Add("See your info");
         optionList.Add("Add funds");
-        optionList.Add("");
         info = "What would you like to do?";
         currentMenu = "customer menu";
         currentChoice = 1;

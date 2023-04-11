@@ -6,8 +6,8 @@ public class InputUsernameCommand : IImplementationCommand
 {
     public void DoStuff()
     {
-        MenuContext menuState = new MenuContext();
-        var output = menuState.InputUserInfo("username");
-        menuState.SetUsername(output);
+        // var menuState = new MenuContext();
+        var output = MenuContext.GetInstance().InputUserInfo("username");
+        MenuContext.GetInstance().SetUsername(output);
     }
 }

@@ -7,8 +7,7 @@ public class PrintOrdersCommand : IImplementationCommand
 {
     public void DoStuff()
     {
-        MenuContext menuState = new MenuContext();
-        var currentCustomer = menuState.GetCurrentCustomer();
+        var currentCustomer = MenuContext.GetInstance().GetCurrentCustomer();
         currentCustomer.PrintOrders();
     }
 }

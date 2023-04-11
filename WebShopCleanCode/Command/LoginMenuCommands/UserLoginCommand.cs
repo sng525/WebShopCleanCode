@@ -6,9 +6,8 @@ public class UserLoginCommand : IImplementationCommand
 {
     public void DoStuff()
     {
-        MenuContext menuState = new MenuContext();
 
-        if (MenuContext.GetInstance().username == null || MenuContext.GetInstance().password == null)
+        if (MenuContext.GetInstance().GetUsername() == null || MenuContext.GetInstance().GetPassword() == null)
         {
             Console.WriteLine();
             Console.WriteLine("Incomplete data.");
@@ -19,13 +18,15 @@ public class UserLoginCommand : IImplementationCommand
             bool found = false;
             foreach (Customer customer in MenuContext.GetInstance().GetCustomerList())
             {
-                if (MenuContext.GetInstance().username.Equals(customer.Username) && customer.CheckPassword(MenuContext.GetInstance().username))
+                if (MenuContext.GetInstance().GetUsername().Equals(customer.Username) && customer.CheckPassword(MenuContext.GetInstance().GetPassword()))
                 {
                     Console.WriteLine();
                     Console.WriteLine(customer.Username + " logged in.");
                     Console.WriteLine();
                     found = true;
                     MenuContext.GetInstance().SetCurrentCustomer(customer);
+                    
+                    var menuState = new MenuContext();
                     menuState.SetState(new MainMenu());
                     menuState.Request();
                 }
