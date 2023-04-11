@@ -2,7 +2,7 @@ using WebShopCleanCode.Menus;
 
 namespace WebShopCleanCode.Command;
 
-public interface ICommand
+public interface IMenuCommand
 {
-    void Execute();
+    void Execute(int currentChoice);
 }

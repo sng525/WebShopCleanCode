@@ -1,8 +1,11 @@
+using WebShopCleanCode.Menus;
+using WebShopCleanCode.MenuStates;
+
 namespace WebShopCleanCode.LeftRightOkBackCommand;
 
 public interface IDirectionCommand
 {
-    void Execute();
+    void Execute(MenuBase menu);
 }
 
 

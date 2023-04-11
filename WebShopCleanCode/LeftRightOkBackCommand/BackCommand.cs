@@ -1,36 +1,30 @@
 using WebShopCleanCode.Menu;
 using WebShopCleanCode.Menus;
+using WebShopCleanCode.MenuStates;
 
 namespace WebShopCleanCode.LeftRightOkBackCommand;
 
 public class BackCommand : IDirectionCommand
 {
-    private IMenu _menu;
-
-    public BackCommand(IMenu menu)
+    public void Execute(MenuBase menu)
     {
-        _menu = menu;
-    }
-
-    public void Execute()
-    {
-        if (_menu.currentMenu.Equals("main menu"))
+        MenuContext menuState = new MenuContext();
+        
+        if (menu.currentMenu.Equals("main menu"))
         {
             Console.WriteLine();
             Console.WriteLine("You're already on the main menu.");
             Console.WriteLine();
         }
-
-        else if (_menu.currentMenu.Equals("purchase menu"))
+        else if (menu.currentMenu.Equals("purchase menu"))
         {
-            ;
-            _menu = new WaresMenu();
-            _menu.DisplayMenu();
+            menuState.SetState(new PurchaseMenu());
+            menuState.Request();
         }
         else
         {
-            _menu = new MainMenu();
-            _menu.DisplayMenu();
+            menuState.SetState(new MainMenu());
+            menuState.Request();
         }
     }
 }

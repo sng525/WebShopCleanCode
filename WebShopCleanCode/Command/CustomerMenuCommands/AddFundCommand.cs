@@ -1,38 +1,13 @@
-using WebShopCleanCode.Menu;
 using WebShopCleanCode.Menus;
+using WebShopCleanCode.MenuStates;
 
 namespace WebShopCleanCode.Command;
 
-public class CustomerMenuCommand : ICommand
+public class AddFundCommand : IImplementationCommand
 {
-    private IMenu _menu;
-
-    public CustomerMenuCommand(IMenu menu)
+    public void DoStuff()
     {
-        _menu = menu;
-    }
-
-    public void Execute()
-    {
-        switch (_menu.currentChoice)
-        {
-            case 1:
-                _menu.currentCustomer.PrintOrders();
-                break;
-            case 2:
-                _menu.currentCustomer.PrintInfo();
-                break;
-            case 3:
-                AddFund(_menu.currentCustomer);
-                break;
-            default:
-                WebShop.PrintDefaultMessage();
-                break;
-        }
-    }
-    
-    public void AddFund(Customer currentCustomer)
-    {
+        var menuState = new MenuContext();
         Console.WriteLine("How many funds would you like to add?");
         string amountString = Console.ReadLine();
         try
@@ -46,6 +21,7 @@ public class CustomerMenuCommand : ICommand
             }
             else
             {
+                var currentCustomer = menuState.GetCurrentCustomer();
                 currentCustomer.Funds += amount;
                 Console.WriteLine();
                 Console.WriteLine(amount + " added to your profile.");
@@ -59,5 +35,4 @@ public class CustomerMenuCommand : ICommand
             Console.WriteLine();
         }
     }
-    
 }

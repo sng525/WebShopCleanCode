@@ -1,96 +1,19 @@
+using WebShopCleanCode.MenuStates;
+namespace WebShopCleanCode.Command.LoginMenuCommands;
 
-
-using WebShopCleanCode;
-using WebShopCleanCode.Command;
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
-
-public class LogInMenuCommand : ICommand
+public class UserRegisterCommand : IImplementationCommand
 {
-    IMenu _menu;
-    private string username { get; set; }
-    private string password { get; set; }
-    private List<Customer> _customers;
-    
-    public LogInMenuCommand(IMenu menu, List<Customer> customers)
-    {
-        _menu = menu;
-        _customers = customers;
-    }
-
-    public void Execute()
-    {
-        switch (_menu.currentChoice)
-        {
-            case 1:
-                username =InputUserInfo("username");
-                break;
-            case 2:
-                password = InputUserInfo("password");
-                break;
-            case 3:
-                _menu.currentCustomer = LogIn(_customers);
-                if (_menu.currentCustomer != null)
-                {
-                    _menu = new MainMenu();
-                    _menu.DisplayMenu();
-                }
-                break;
-            case 4:
-                _menu.currentCustomer = Register(_customers);
-                _menu = new MainMenu();
-                _menu.DisplayMenu();
-                break;
-            default:
-                WebShop.PrintDefaultMessage();
-                break;
-        }
-    }
-
-    private Customer LogIn(List<Customer> customers)
-    {
-        if (username == null || password == null)
-        {
-            Console.WriteLine();
-            Console.WriteLine("Incomplete data.");
-            Console.WriteLine();
-        }
-        else
-        {
-            bool found = false;
-            foreach (Customer customer in customers)
-            {
-                if (username.Equals(customer.Username) && customer.CheckPassword(password))
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(customer.Username + " logged in.");
-                    Console.WriteLine();
-                    return customer;
-                }
-            }
-
-            if (found == false)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Invalid credentials.");
-                Console.WriteLine();
-            }
-        }
-        return null;
-    }
-
-    private Customer Register(List<Customer> customers)
+    public void DoStuff()
     {
         Console.WriteLine("Please write your username.");
-        string newUsername = Console.ReadLine();
-        foreach (Customer customer in customers)
+        var newUsername = Console.ReadLine();
+        foreach (Customer customer in MenuContext.GetInstance().GetCustomerList())
         {
-            if (customer.Username.Equals(username))
+            if (customer.Username.Equals(MenuContext.GetInstance().username))
             {
                 Console.WriteLine();
                 Console.WriteLine("Username already exists.");
                 Console.WriteLine();
-                return null;
             }
         }
 
@@ -100,21 +23,30 @@ public class LogInMenuCommand : ICommand
         string firstName = AskCustomerInfo("first name", ref next);
         string lastName = AskCustomerInfo("last name", ref next);
         string email = AskCustomerInfo("email", ref next);
-        int age = AskCustomerAge(ref next);      
+        int age = AskCustomerAge(ref next);
         string address = AskCustomerInfo("address", ref next);
         string phoneNumber = AskCustomerInfo("phone number", ref next);
 
-        Customer newCustomer = new Customer(newUsername, newPassword, firstName, lastName,
-            email, age, address, phoneNumber);
-        customers.Add(newCustomer);
-        _menu.currentCustomer = newCustomer;
+        CustomerBuilder customerBuilder = new CustomerBuilder();
+        Customer newCustomer = customerBuilder.SetUsername(newUsername)
+            .SetPassword(newPassword)
+            .SetFirstName(firstName)
+            .SetLastName(lastName)
+            .SetEmail(email)
+            .SetAge(age)
+            .SetAddress(address)
+            .SetPassword(phoneNumber).BuildCustomer();
+        
+        MenuContext menuState = new MenuContext();
+        menuState.GetCustomerList().Add(newCustomer);
+        menuState.SetCurrentCustomer(newCustomer);
+        
         Console.WriteLine();
-        Console.WriteLine(
-            newCustomer.Username + " successfully added and is now logged in.");
+        Console.WriteLine(newCustomer.Username + " successfully added and is now logged in.");
         Console.WriteLine();
-        _menu = new MainMenu();
-        _menu.DisplayMenu();
-        return newCustomer;
+        
+        menuState.SetState(new MainMenu());
+        menuState.Request();
     }
 
     private int AskCustomerAge(ref bool next)
@@ -161,7 +93,6 @@ public class LogInMenuCommand : ICommand
 
         return age;
     }
-
     private string AskCustomerInfo(string infoMessage, ref bool next)
     {
         string choice;
@@ -202,14 +133,5 @@ public class LogInMenuCommand : ICommand
         }
 
         return infoItem;
-    }
-    
-    private string InputUserInfo(string infoName) 
-    {
-        Console.WriteLine("A keyboard appears.");
-        Console.WriteLine($"Please input your {infoName}.");
-        string input = Console.ReadLine();
-        Console.WriteLine();
-        return input;
     }
 }

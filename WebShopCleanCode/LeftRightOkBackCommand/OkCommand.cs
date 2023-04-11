@@ -1,29 +1,36 @@
 using System.Windows.Input;
+using WebShopCleanCode.Command;
+using WebShopCleanCode.Menu;
 using WebShopCleanCode.Menus;
-using ICommand = WebShopCleanCode.Command.ICommand;
+using WebShopCleanCode.MenuStates;
+using ICommand = WebShopCleanCode.Command.IMenuCommand;
 
 namespace WebShopCleanCode.LeftRightOkBackCommand;
 
 public class OkCommand : IDirectionCommand
 {
-    private Dictionary<(string currentMenu, int currentChoice), ICommand> _commandDict;
-    private IMenu _menu;
-
-    public OkCommand(IMenu menu, Dictionary<(string currentMenu, int currentChoice), ICommand> commandDict)
+    private Dictionary<string, IMenuCommand> commandDict;
+    
+    public OkCommand()
     {
-        _menu = menu;
-        _commandDict = commandDict;
+        commandDict = new Dictionary<string, IMenuCommand>();
+        commandDict.Add("main menu", new MainMenuCommand());
+        commandDict.Add("customer menu", new CustomerMenuCommand());
+        commandDict.Add("sort menu", new SortWaresMenuCommand());
+        commandDict.Add("wares menu", new WaresMenuCommand());
+        commandDict.Add("login menu", new LogInMenuCommand());
+        commandDict.Add("purchase menu", new PurchaseMenuCommand());
     }
-
-    public void Execute()
+    
+    public void Execute(MenuBase menu)
     {
-        if (_commandDict.TryGetValue((_menu.currentMenu, _menu.currentChoice), out var command))
+        if (commandDict.TryGetValue(menu.currentMenu, out var command))
         {
-            command.Execute();
+            command.Execute(menu.currentChoice);
         }
         else
         {
-            WebShop.PrintDefaultMessage();
+            MenuBase.PrintDefaultMessage();
         }
     }
     

@@ -1,21 +1,15 @@
 using WebShopCleanCode.Menus;
+using WebShopCleanCode.MenuStates;
 
 namespace WebShopCleanCode.LeftRightOkBackCommand;
 
 public class RightCommand : IDirectionCommand
 {
-    private IMenu _menu;
-
-    public RightCommand(IMenu menu)
+    public void Execute(MenuBase menu)
     {
-        _menu = menu;
-    }
-
-    public void Execute()
-    {
-        if (_menu.currentChoice < _menu.amountOfOptions)
+        if (menu.currentChoice < menu.optionList.Count)
         {
-            _menu.currentChoice++;
+            menu.currentChoice++;
         }
     }
 }
