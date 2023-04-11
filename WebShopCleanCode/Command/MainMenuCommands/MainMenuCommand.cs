@@ -1,4 +1,6 @@
-namespace WebShopCleanCode.Command;
+using WebShopCleanCode.MenuStates;
+
+namespace WebShopCleanCode.Command.MainMenuCommands;
 
 public class MainMenuCommand : IMenuCommand
 {

@@ -1,6 +1,5 @@
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
 using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
 
 namespace WebShopCleanCode.LeftRightOkBackCommand;
 
@@ -18,7 +17,7 @@ public class BackCommand : IDirectionCommand
         }
         else if (menu.currentMenu.Equals("purchase menu"))
         {
-            menuState.SetState(new PurchaseMenu());
+            menuState.SetState(new WaresMenu());
             menuState.Request();
         }
         else

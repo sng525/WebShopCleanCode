@@ -1,4 +1,6 @@
 using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
+
 namespace WebShopCleanCode.Command.LoginMenuCommands;
 
 public class UserRegisterCommand : IImplementationCommand
@@ -9,7 +11,7 @@ public class UserRegisterCommand : IImplementationCommand
         var newUsername = Console.ReadLine();
         foreach (Customer customer in MenuContext.GetInstance().GetCustomerList())
         {
-            if (customer.Username.Equals(MenuContext.GetInstance().username))
+            if (customer.Username.Equals(MenuContext.GetInstance().GetUsername()))
             {
                 Console.WriteLine();
                 Console.WriteLine("Username already exists.");
@@ -28,7 +30,8 @@ public class UserRegisterCommand : IImplementationCommand
         string phoneNumber = AskCustomerInfo("phone number", ref next);
 
         CustomerBuilder customerBuilder = new CustomerBuilder();
-        Customer newCustomer = customerBuilder.SetUsername(newUsername)
+        Customer newCustomer = customerBuilder
+            .SetUsername(newUsername)
             .SetPassword(newPassword)
             .SetFirstName(firstName)
             .SetLastName(lastName)
@@ -37,14 +40,14 @@ public class UserRegisterCommand : IImplementationCommand
             .SetAddress(address)
             .SetPassword(phoneNumber).BuildCustomer();
         
-        MenuContext menuState = new MenuContext();
-        menuState.GetCustomerList().Add(newCustomer);
-        menuState.SetCurrentCustomer(newCustomer);
+        MenuContext.GetInstance().GetCustomerList().Add(newCustomer);
+        MenuContext.GetInstance().SetCurrentCustomer(newCustomer);
         
         Console.WriteLine();
         Console.WriteLine(newCustomer.Username + " successfully added and is now logged in.");
         Console.WriteLine();
         
+        MenuContext menuState = new MenuContext();
         menuState.SetState(new MainMenu());
         menuState.Request();
     }

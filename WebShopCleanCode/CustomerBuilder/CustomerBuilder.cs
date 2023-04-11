@@ -11,7 +11,6 @@ public class CustomerBuilder
     string Address;
     string PhoneNumber;
     int Funds;
-    List<Order> Orders;
 
     public CustomerBuilder()
     {
@@ -24,7 +23,7 @@ public class CustomerBuilder
         string Address = "";
         string PhoneNumber = "";
         int Funds = 0;
-        Orders = new List<Order>();
+        new List<Order>();
     }
 
     public CustomerBuilder SetUsername(string username)
@@ -60,16 +59,6 @@ public class CustomerBuilder
     public CustomerBuilder SetAddress(string address)
     {
         Address = address;
-        return this;
-    }
-    public CustomerBuilder SetPhoneNumber(string phoneNumber)
-    {
-        PhoneNumber = phoneNumber;
-        return this;
-    }
-    public CustomerBuilder SetFunds(int funds)
-    {
-        Funds = funds;
         return this;
     }
 

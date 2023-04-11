@@ -1,4 +1,5 @@
 using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
 
 namespace WebShopCleanCode.Command.LoginMenuCommands;
 
@@ -6,8 +7,10 @@ public class UserLoginCommand : IImplementationCommand
 {
     public void DoStuff()
     {
-
-        if (MenuContext.GetInstance().GetUsername() == null || MenuContext.GetInstance().GetPassword() == null)
+        string username = MenuContext.GetInstance().GetUsername();
+        string password = MenuContext.GetInstance().GetPassword();
+        
+        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
             Console.WriteLine();
             Console.WriteLine("Incomplete data.");
@@ -18,7 +21,7 @@ public class UserLoginCommand : IImplementationCommand
             bool found = false;
             foreach (Customer customer in MenuContext.GetInstance().GetCustomerList())
             {
-                if (MenuContext.GetInstance().GetUsername().Equals(customer.Username) && customer.CheckPassword(MenuContext.GetInstance().GetPassword()))
+                if (username.Equals(customer.Username) && customer.CheckPassword(password))
                 {
                     Console.WriteLine();
                     Console.WriteLine(customer.Username + " logged in.");
@@ -29,6 +32,7 @@ public class UserLoginCommand : IImplementationCommand
                     var menuState = new MenuContext();
                     menuState.SetState(new MainMenu());
                     menuState.Request();
+                    break;
                 }
             }
             if (found == false)

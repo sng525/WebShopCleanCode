@@ -1,4 +1,3 @@
-using WebShopCleanCode.Menus;
 using WebShopCleanCode.MenuStates;
 
 namespace WebShopCleanCode.LeftRightOkBackCommand;

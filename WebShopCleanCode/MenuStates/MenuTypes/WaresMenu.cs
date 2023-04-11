@@ -1,7 +1,4 @@
-using WebShopCleanCode.Menus;
-using WebShopCleanCode.MenuStates;
-
-namespace WebShopCleanCode.Menu;
+namespace WebShopCleanCode.MenuStates.MenuTypes;
 
 public class WaresMenu : MenuBase
 {
@@ -26,9 +23,9 @@ public class WaresMenu : MenuBase
     public override void DisplayMenu()
     {
         Console.WriteLine(info);
-        CheckIfPurchaseMenu();
         PrintOption();
         MenuBar();
+        CheckLogInStatus();
         AskChoice();
         DisplayMenu();
     }

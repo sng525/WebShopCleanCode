@@ -1,7 +1,4 @@
-using System.Windows.Input;
-using WebShopCleanCode.Menus;
-
-namespace WebShopCleanCode.MenuStates;
+namespace WebShopCleanCode.MenuStates.MenuTypes;
 
 public class MainMenu : MenuBase
 {
@@ -18,9 +15,9 @@ public class MainMenu : MenuBase
     public override void DisplayMenu()
     {
         Console.WriteLine(info);
-        CheckIfPurchaseMenu();
         PrintOption();
         MenuBar();
+        CheckLogInStatus();
         AskChoice();
         DisplayMenu();
     }

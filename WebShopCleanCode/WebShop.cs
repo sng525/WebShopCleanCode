@@ -1,5 +1,5 @@
-﻿using WebShopCleanCode.LeftRightOkBackCommand;
-using WebShopCleanCode.MenuStates;
+﻿using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
 
 namespace WebShopCleanCode
 {

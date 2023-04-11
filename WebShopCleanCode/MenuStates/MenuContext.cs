@@ -1,13 +1,10 @@
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
-
 namespace WebShopCleanCode.MenuStates;
 
 public class MenuContext
 {
     public IMenu menuState { get; set; }
     public static MenuContext instance;
-    public Customer currentCustomer { get; set; } = null;
+    public Customer currentCustomer { get; set; }
     public List<Customer> customerList = new List<Customer>();
     public string username;
     public string password;
@@ -76,6 +73,4 @@ public class MenuContext
         Console.WriteLine();
         return input;
     }
-
-
 }

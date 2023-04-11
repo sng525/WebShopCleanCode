@@ -1,10 +1,6 @@
-using System.Windows.Input;
 using WebShopCleanCode.LeftRightOkBackCommand;
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
-using WebShopCleanCode.MenuStates;
 
-namespace WebShopCleanCode;
+namespace WebShopCleanCode.MenuStates;
 
 public abstract class MenuBase : IMenu
 {
@@ -37,9 +33,19 @@ public abstract class MenuBase : IMenu
             { "q", new QuitCommand() }
         };
 
-        for (int i = 0; i < optionList.Count; i++)
+        if (currentMenu == "purchase menu")
         {
-            Console.Write(i + 1 + "\t");
+            for (int i = 0; i < productList.products.Count; i++)
+            {
+                Console.Write(i + 1 + "\t");
+            }
+        }
+        else
+        {
+            for (int i = 0; i < optionList.Count; i++)
+            {
+                Console.Write(i + 1 + "\t");
+            }
         }
 
         Console.WriteLine();
@@ -51,8 +57,6 @@ public abstract class MenuBase : IMenu
         Console.WriteLine("|");
 
         Console.WriteLine("Your buttons are Left, Right, OK, Back and Quit.");
-
-        CheckLogInStatus();
     }
 
     public void AskChoice()
@@ -81,118 +85,24 @@ public abstract class MenuBase : IMenu
         }
     }
 
-    public void PurchaseWare()
+    public virtual void PurchaseWare()
     {
-        int index = currentChoice - 1;
-        var product = productList.products[index];
-        if (product.InStock())
-        {
-            if (MenuContext.GetInstance().currentCustomer.CanAfford(product.Price))
-            {
-                MenuContext.GetInstance().currentCustomer.Funds -= product.Price;
-                product.NrInStock--;
-                MenuContext.GetInstance().currentCustomer.Orders
-                    .Add(new Order(product.Name, product.Price, DateTime.Now));
-                Console.WriteLine();
-                Console.WriteLine("Successfully bought " + product.Name);
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("You cannot afford.");
-                Console.WriteLine();
-            }
-        }
-        else
-        {
-            Console.WriteLine();
-            Console.WriteLine("Not in stock.");
-            Console.WriteLine();
-        }
+        throw new NotImplementedException();
     }
 
     public virtual void SeeAllWares()
     {
         throw new NotImplementedException();
     }
-
-    public void bubbleSort(string variable, bool ascending)
+    
+    public virtual void WareSortedNotification()
     {
-        if (variable.Equals("name"))
-        {
-            int length = productList.products.Count;
-            for (int i = 0; i < length - 1; i++)
-            {
-                bool sorted = true;
-                int length2 = length - i;
-                for (int j = 0; j < length2 - 1; j++)
-                {
-                    if (ascending)
-                    {
-                        if (productList.products[j].Name.CompareTo(productList.products[j + 1].Name) < 0)
-                        {
-                            Product temp = productList.products[j];
-                            productList.products[j] = productList.products[j + 1];
-                            productList.products[j + 1] = temp;
-                            sorted = false;
-                        }
-                    }
-                    else
-                    {
-                        if (productList.products[j].Name.CompareTo(productList.products[j + 1].Name) > 0)
-                        {
-                            Product temp = productList.products[j];
-                            productList.products[j] = productList.products[j + 1];
-                            productList.products[j + 1] = temp;
-                            sorted = false;
-                        }
-                    }
-                }
+        throw new NotImplementedException();
+    }
 
-                if (sorted == true)
-                {
-                    break;
-                }
-            }
-        }
-        else if (variable.Equals("price"))
-        {
-            int length = productList.products.Count;
-            for (int i = 0; i < length - 1; i++)
-            {
-                bool sorted = true;
-                int length2 = length - i;
-                for (int j = 0; j < length2 - 1; j++)
-                {
-                    if (ascending)
-                    {
-                        if (productList.products[j].Price > productList.products[j + 1].Price)
-                        {
-                            Product temp = productList.products[j];
-                            productList.products[j] = productList.products[j + 1];
-                            productList.products[j + 1] = temp;
-                            sorted = false;
-                        }
-                    }
-                    else
-                    {
-                        if (productList.products[j].Price < productList.products[j + 1].Price)
-                        {
-                            Product temp = productList.products[j];
-                            productList.products[j] = productList.products[j + 1];
-                            productList.products[j + 1] = temp;
-                            sorted = false;
-                        }
-                    }
-                }
-
-                if (sorted == true)
-                {
-                    break;
-                }
-            }
-        }
+    public virtual void bubbleSort(string variable, bool ascending)
+    {
+        throw new NotImplementedException();
     }
 
     public void CheckLogInStatus()
@@ -205,27 +115,6 @@ public abstract class MenuBase : IMenu
         {
             Console.WriteLine("Nobody logged in.");
         }
-    }
-
-    public void CheckIfPurchaseMenu()
-    {
-        if (currentMenu.Equals("purchase menu"))
-        {
-            productList = new ProductList();
-            for (int i = 0; i < optionList.Count; i++)
-            {
-                Console.WriteLine(i + 1 + ": " + productList.products[i].Name + ", " + productList.products[i].Price + "kr");
-            }
-
-            Console.WriteLine("Your funds: " + MenuContext.GetInstance().GetCurrentCustomer().Funds);
-        }
-    }
-
-    public void WareSortedNotification()
-    {
-        Console.WriteLine();
-        Console.WriteLine("Wares sorted.");
-        Console.WriteLine();
     }
 
     public static void PrintDefaultMessage()

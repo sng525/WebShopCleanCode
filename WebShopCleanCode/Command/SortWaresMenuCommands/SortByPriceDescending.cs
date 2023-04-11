@@ -1,5 +1,5 @@
-using WebShopCleanCode.Menu;
 using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
 
 namespace WebShopCleanCode.Command.SortWaresMenuCommands;
 

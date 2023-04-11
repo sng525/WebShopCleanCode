@@ -1,6 +1,6 @@
 using WebShopCleanCode.MenuStates;
 
-namespace WebShopCleanCode.Command;
+namespace WebShopCleanCode.Command.CustomerMenuCommands;
 
 public class PrintInfoCommand : IImplementationCommand
 {

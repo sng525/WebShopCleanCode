@@ -1,30 +1,31 @@
-using WebShopCleanCode.Menus;
-using WebShopCleanCode.MenuStates;
-
-namespace WebShopCleanCode.Menu;
+namespace WebShopCleanCode.MenuStates.MenuTypes;
 
 public class LoginMenu : MenuBase
 {
     public LoginMenu()
     {
         optionList = new List<string>();
-
         optionList.Add("Set Username");
         optionList.Add("Set Password");
-        optionList.Add("Login");
-        optionList.Add("Register");
+        if (MenuContext.GetInstance().GetCurrentCustomer() == null)
+        {
+            optionList.Add("Login");
+            optionList.Add("Register");
+        }
+        else
+        {
+            optionList.Add("Logout");
+        }
+
         currentChoice = 1;
         info = "Please submit username and password.";
         currentMenu = "login menu";
-        MenuContext.GetInstance().currentCustomer = null;
-        currentChoice = 1;
     }
     public override void DisplayMenu()
     {
         if (MenuContext.GetInstance().GetCurrentCustomer() == null)
         {
             Console.WriteLine(info);
-            CheckIfPurchaseMenu();
             PrintOption();
             MenuBar();
             AskChoice();
@@ -32,8 +33,8 @@ public class LoginMenu : MenuBase
         }
         else
         {
-            optionList[4] = "Logout";
             PrintOption();
+            MenuContext.GetInstance().SetCurrentCustomer(null);
             Console.WriteLine();
             Console.WriteLine(MenuContext.GetInstance().currentCustomer.Username + " logged out.");
             Console.WriteLine();

@@ -1,7 +1,6 @@
-using WebShopCleanCode.Menus;
 using WebShopCleanCode.MenuStates;
 
-namespace WebShopCleanCode.Command;
+namespace WebShopCleanCode.Command.CustomerMenuCommands;
 
 public class AddFundCommand : IImplementationCommand
 {

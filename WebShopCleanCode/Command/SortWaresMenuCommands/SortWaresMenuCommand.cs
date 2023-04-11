@@ -1,9 +1,7 @@
-using System.Windows.Input;
-using WebShopCleanCode;
-using WebShopCleanCode.Command;
-using WebShopCleanCode.Command.SortWaresMenuCommands;
-using WebShopCleanCode.Menu;
 using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
+
+namespace WebShopCleanCode.Command.SortWaresMenuCommands;
 
 public class SortWaresMenuCommand : IMenuCommand
 {

@@ -1,7 +1,8 @@
-using System.Windows.Input;
 using WebShopCleanCode.Command;
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
+using WebShopCleanCode.Command.CustomerMenuCommands;
+using WebShopCleanCode.Command.MainMenuCommands;
+using WebShopCleanCode.Command.SortWaresMenuCommands;
+using WebShopCleanCode.Command.WaresMenuCommands;
 using WebShopCleanCode.MenuStates;
 using ICommand = WebShopCleanCode.Command.IMenuCommand;
 
@@ -13,13 +14,15 @@ public class OkCommand : IDirectionCommand
     
     public OkCommand()
     {
-        commandDict = new Dictionary<string, IMenuCommand>();
-        commandDict.Add("main menu", new MainMenuCommand());
-        commandDict.Add("customer menu", new CustomerMenuCommand());
-        commandDict.Add("sort menu", new SortWaresMenuCommand());
-        commandDict.Add("wares menu", new WaresMenuCommand());
-        commandDict.Add("login menu", new LogInMenuCommand());
-        commandDict.Add("purchase menu", new PurchaseMenuCommand());
+        commandDict = new Dictionary<string, IMenuCommand>
+        {
+            { "main menu", new MainMenuCommand() },
+            { "customer menu", new CustomerMenuCommand() },
+            { "sort menu", new SortWaresMenuCommand() },
+            { "wares menu", new WaresMenuCommand() },
+            { "login menu", new LogInMenuCommand() },
+            { "purchase menu", new PurchaseMenuCommand() }
+        };
     }
     
     public void Execute(MenuBase menu)
@@ -33,5 +36,4 @@ public class OkCommand : IDirectionCommand
             MenuBase.PrintDefaultMessage();
         }
     }
-    
 }

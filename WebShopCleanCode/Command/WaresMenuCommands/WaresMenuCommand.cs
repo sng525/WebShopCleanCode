@@ -1,12 +1,6 @@
-
-
-using WebShopCleanCode;
-using WebShopCleanCode.Command;
-using WebShopCleanCode.Command.WaresMenuCommands;
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
 using WebShopCleanCode.MenuStates;
-using NavigateToLoginMenuCommand = WebShopCleanCode.Command.NavigateToLoginMenuCommand;
+
+namespace WebShopCleanCode.Command.WaresMenuCommands;
 
 public class WaresMenuCommand : IMenuCommand
 {
@@ -34,7 +28,4 @@ public class WaresMenuCommand : IMenuCommand
             MenuBase.PrintDefaultMessage();
         }
     }
-    
-        
-
 }

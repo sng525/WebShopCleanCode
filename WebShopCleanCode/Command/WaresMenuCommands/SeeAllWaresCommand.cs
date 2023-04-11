@@ -1,6 +1,5 @@
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
 using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
 
 namespace WebShopCleanCode.Command.WaresMenuCommands;
 

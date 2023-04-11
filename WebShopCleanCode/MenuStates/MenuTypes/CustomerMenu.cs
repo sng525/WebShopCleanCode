@@ -1,16 +1,15 @@
-using WebShopCleanCode.Menus;
-using WebShopCleanCode.MenuStates;
-
-namespace WebShopCleanCode.Menu;
+namespace WebShopCleanCode.MenuStates.MenuTypes;
 
 public class CustomerMenu : MenuBase
 {
     public CustomerMenu()
     {
-        optionList = new List<string>();
-        optionList.Add("See your orders");
-        optionList.Add("See your info");
-        optionList.Add("Add funds");
+        optionList = new List<string>
+        {
+            "See your orders",
+            "See your info",
+            "Add funds"
+        };
         info = "What would you like to do?";
         currentMenu = "customer menu";
         currentChoice = 1;
@@ -21,9 +20,9 @@ public class CustomerMenu : MenuBase
         if (MenuContext.GetInstance().GetCurrentCustomer() != null)
         {
             Console.WriteLine(info);
-            CheckIfPurchaseMenu();
             PrintOption();
             MenuBar();
+            CheckLogInStatus();
             AskChoice();
             DisplayMenu();
         }

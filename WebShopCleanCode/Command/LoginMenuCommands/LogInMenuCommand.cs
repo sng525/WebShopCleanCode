@@ -1,9 +1,8 @@
 using WebShopCleanCode;
 using WebShopCleanCode.Command;
 using WebShopCleanCode.Command.LoginMenuCommands;
-using WebShopCleanCode.Menu;
-using WebShopCleanCode.Menus;
 using WebShopCleanCode.MenuStates;
+using WebShopCleanCode.MenuStates.MenuTypes;
 
 public class LogInMenuCommand : IMenuCommand
 {
