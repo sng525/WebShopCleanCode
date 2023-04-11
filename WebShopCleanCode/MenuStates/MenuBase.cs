@@ -100,7 +100,12 @@ public abstract class MenuBase : IMenu
         throw new NotImplementedException();
     }
 
-    public virtual void bubbleSort(string variable, bool ascending)
+    public virtual void QuickSortByName(List<Product> products, int start, int end, bool ascending)
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual void QuickSortByPrice(List<Product> products, int start, int end, bool ascending)
     {
         throw new NotImplementedException();
     }

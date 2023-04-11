@@ -1,4 +1,6 @@
-﻿namespace WebShopCleanCode
+﻿using WebShopCleanCode.MenuStates.MenuTypes;
+
+namespace WebShopCleanCode
 {
     public class Program
     {
@@ -6,6 +8,7 @@
         {
             WebShop webShop = new WebShop();
             webShop.Run();
+
         }
     }
 }

@@ -8,7 +8,9 @@ public class SortByPriceAscending : IImplementationCommand
     public void DoStuff()
     {
         MenuBase menuType = new SortWaresMenu();
-        menuType.bubbleSort("price", true);
+        // menuType.bubbleSort("price", true);
+        menuType.QuickSortByPrice(menuType.productList.products, 0, menuType.productList.products.Count - 1, true);
+        
         menuType.WareSortedNotification();
     }
 }
